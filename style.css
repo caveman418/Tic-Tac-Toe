@@ -1,0 +1,167 @@
+/* global styling */
+
+@font-face {
+    font-family: 'raleway';
+    src: url(./fonts/Raleway/Raleway-VariableFont_wght.ttf) format('truetype');
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'raleway', Arial, Helvetica, sans-serif;
+    user-select: none;
+}
+
+:root {
+    --theme-color: rgb(168, 62, 154);
+    --shadow-color: rgb(201, 201, 201);
+    --backdrop-color: gainsboro;
+    --hover-color: rgb(210,210,210);
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    background-color: var(--backdrop-color);
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* content styling */
+
+.main {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    height: 150px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 5rem;
+    background-color: var(--theme-color);
+    border-bottom: 5px solid black;
+}
+
+.game-container {
+    flex: 1;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.board {
+    height: 50vh;
+    width: 50vh;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    align-items: center;
+    justify-items: center;
+}
+
+.square {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+}
+
+.square:nth-child(-n+6) {
+    border-bottom: 5px black solid;
+}
+
+#square-0, #square-1, #square-3, #square-4, #square-6, #square-7 {
+    border-right: 5px black solid;
+}
+
+.square:hover {
+    cursor: pointer;
+    background-color: var(--hover-color);
+}
+
+.menu {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.new-game-button {
+    background-color: var(--hover-color);
+}
+
+button {
+    font-size: 1.5rem;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.menu > div {
+    font-size: 1.5rem;
+}
+
+
+
+/* form styling */
+
+.popup {
+    border: 5px black solid;
+    background-color: var(--hover-color);
+    height: 65vh;
+    width: 50vh;
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform: translate(-50%,-50%) scale(0);
+    transition: transform 0.2s ease-in-out;
+}
+
+.popup.active {
+    transform:translate(-50%,-50%) scale(100%);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5rem;
+}
+
+form > input {
+    width: 70%;
+    font-size: 2rem;
+    padding: .5rem;
+}
+
+.form-title {
+    font-size: 2rem;
+}
+
+form > button {
+    background-color: var(--theme-color);
+    padding: 1rem;
+    font-weight: bold;
+}
