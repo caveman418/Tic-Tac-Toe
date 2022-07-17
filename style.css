@@ -156,7 +156,7 @@ form > input {
     padding: .5rem;
 }
 
-.form-title {
+.form-title, .turn {
     font-size: 2rem;
 }
 

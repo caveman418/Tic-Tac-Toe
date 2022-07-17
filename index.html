@@ -13,15 +13,16 @@
         <div class="header">
             <div class="title">Tic Tac Toe</div>
         </div>
-        <div class="popup">
+        <div class="popup active">
             <form action="">
                 <div class="form-title">Enter Player Names</div>
-                <input type="text" placeholder="Player 1" maxlength="15">
-                <input type="text" placeholder="Player 2" maxlength="15">
+                <input type="text" placeholder="Player 1" id="input-1" maxlength="15">
+                <input type="text" placeholder="Player 2" id="input-2" maxlength="15">
                 <button type="button" class="start-game">Start Game</button>
             </form>
         </div>
         <div class="game-container">
+            <div class="turn">Player 1's turn</div>
             <div class="board">
                 <div class="square" id="square-0"></div>
                 <div class="square" id="square-1"></div>

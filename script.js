@@ -1,46 +1,59 @@
+// Player factory function
+
+const Player = (name) => {
+
+    let wins = 0;
+
+    const winner = () => {wins++};
+    const getWins = () => {return wins};
+
+    return {name, winner, getWins};
+
+}
+
+
+// Event listener IIFE
+
 (function() {
+
     const newGameButton = document.querySelector('.new-game-button');
-    const startGamebutton = document.querySelector('.start-game');
-    const popupMenu = document.querySelector('.popup');
+    const startGameButton = document.querySelector('.start-game');
+    const popup = document.querySelector('.popup');
+    const playerOneInput = document.querySelector('#input-1');
+    const playerTwoInput = document.querySelector('#input-2');
     const squares = document.querySelectorAll('.square');
 
     newGameButton.addEventListener('mousedown', () => {
-        popupMenu.classList.add('active');
+        popup.classList.add('active');
     });
 
-    startGamebutton.addEventListener('mousedown', () => {
-        popupMenu.classList.remove('active');
+    startGameButton.addEventListener('mousedown', () => {
+        popup.classList.remove('active');
+        let playerOne = Player(playerOneInput.value);
+        let playerTwo = Player(playerTwoInput.value);
+        console.log(playerOne);
     });
-
-    squares.forEach((square) => {
-        let pos = square.id.slice(-1);
-        square.addEventListener('mousedown', () => {
-            let player = (gameBoard.counter() % 2 === 0) ? 'x':'o';
-            gameBoard.add(pos,player);
-            square.textContent = gameBoard.searchIndex(pos);
-        });
-    });
+    console.log(playerOne);
+    
+    
 })();
+
+console.log(playerOne);
+
+// Board matrix module with methods to add/get the current board
 
 const gameBoard = (function() {
-    let count = 0;
+
     let board = (new Array(9)).fill('');
-    
-    const counter = () => {
-        return count;
+
+    const add = (pos,mark) => {
+        board[pos] = mark;
     }
-    const searchIndex = (index) => {
-        return board[index];
+    const get = () => {
+        return board;
     }
-    const add = (pos,player) => {
-        if (board[pos]==='') {
-            count++;
-            board[pos] = player;
-        }
-    }
-    const clear = () => {
-        count = 0;
-        board.fill('');
-    }
-    return {counter, searchIndex, add, clear};
+
+    return {add, get};
+
 })();
+
