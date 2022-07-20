@@ -92,7 +92,7 @@ const Player = (name) => {
                 }
                 resetGame();
 
-            } else if (!gameBoard.checkWin() && !gameBoard.get().includes('')) { //draw if no winner and board is full
+            } else if (!gameBoard.checkWin() && gameBoard.isFull()) { //draw if no winner and board is full
                 
                 gameOver = true;
                 turnDisplay.textContent = "It's a draw!";
@@ -127,8 +127,8 @@ const gameBoard = (function(squares) {
         count++;
         board[pos] = mark;
     }
-    const get = () => {
-        return board;
+    const isFull = () => {
+        return (board.includes('')) ? false:true;
     }
     const counter = () => {
         return count;
@@ -155,6 +155,6 @@ const gameBoard = (function(squares) {
         }
     }
 
-    return {add, get, counter, checkWin, clear, updateDisp};
+    return {add, isFull, counter, checkWin, clear, updateDisp};
 
 })(squares);
