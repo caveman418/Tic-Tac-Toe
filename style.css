@@ -12,7 +12,7 @@
 }
 
 :root {
-    --theme-color: rgb(168, 62, 154);
+    --theme-color: rgb(62, 129, 168);
     --shadow-color: rgb(201, 201, 201);
     --backdrop-color: gainsboro;
     --hover-color: rgb(210,210,210);
@@ -154,6 +154,7 @@ form > input {
     width: 70%;
     font-size: 2rem;
     padding: .5rem;
+    border: 1px solid black;
 }
 
 .form-title, .turn {

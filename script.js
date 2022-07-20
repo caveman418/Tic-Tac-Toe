@@ -1,4 +1,5 @@
 const squares = document.querySelectorAll('.square'); //global nodelist
+let gameOver = false;
 
 // Player factory function
 
@@ -29,6 +30,15 @@ const Player = (name) => {
     const playerTwoInput = document.querySelector('#input-2');
     const playerOneScore = document.querySelector('.player-one-score');
     const playerTwoScore = document.querySelector('.player-two-score');
+    const turnDisplay = document.querySelector('.turn');
+
+    function resetGame() {
+        setTimeout(()=>{
+            gameBoard.clear();
+            gameBoard.updateDisp();
+            turnDisplay.textContent = `${playerOne.name}'s turn`;
+        },1000);
+    }
 
     newGameButton.addEventListener('mousedown', () => {
         popup.classList.add('active');
@@ -38,29 +48,58 @@ const Player = (name) => {
         popup.classList.remove('active');
         playerOne = Player(playerOneInput.value);
         playerTwo = Player(playerTwoInput.value);
-        playerOneScore.textContent = (playerOne.name==='') ? 'Player 1: 0':`${playerOne.name}: 0`
-        playerTwoScore.textContent = (playerTwo.name==='') ? 'Player 2: 0':`${playerTwo.name}: 0`
+        if (playerOne.name==='') playerOne.name = 'Player 1';
+        if (playerTwo.name==='') playerTwo.name = 'Player 2';
+        playerOneScore.textContent = `${playerOne.name}: 0`;
+        playerTwoScore.textContent = `${playerTwo.name}: 0`;
+        turnDisplay.textContent = `${playerOne.name}'s turn`;
+
+        gameBoard.clear();
+        gameBoard.updateDisp();
+        playerOneInput.value = '';
+        playerTwoInput.value = '';
     });
     
     squares.forEach((square) => {
         let squareID = Number(square.id.slice(-1));
         square.addEventListener('mousedown', () => {
-            if (!square.textContent==='') {return}
-            let mark = (gameBoard.counter()%2===0) ? 'x':'o';
+
+            if (square.textContent!=='' || gameOver) {return}
+
+            let mark;
+            if (gameBoard.counter()%2===0) {
+                mark = 'x';
+                turnDisplay.textContent = `${playerTwo.name}'s turn`;
+            } else {
+                mark = 'o';
+                turnDisplay.textContent = `${playerOne.name}'s turn`;
+            }
+
             gameBoard.add(squareID,mark);
             gameBoard.updateDisp();
 
             if (gameBoard.checkWin()) {
+
+                gameOver = true;
                 if (mark==='x') {
                     playerOne.winner();
-                    playerOneScore.textContent = `Player 1: ${playerOne.getWins()}`
+                    playerOneScore.textContent = `Player 1: ${playerOne.getWins()}`;
+                    turnDisplay.textContent = `${playerOne.name} wins!`;
                 } else {
                     playerTwo.winner();
-                    playerTwoScore.textContent = `Player 1: ${playerTwo.getWins()}`
+                    playerTwoScore.textContent = `Player 1: ${playerTwo.getWins()}`;
+                    turnDisplay.textContent = `${playerTwo.name} wins!`;
                 }
-                gameBoard.clear();
-                gameBoard.updateDisp();
-            };
+                resetGame();
+
+            } else if (!gameBoard.checkWin() && !gameBoard.get().includes('')) { //draw if no winner and board is full
+                
+                gameOver = true;
+                turnDisplay.textContent = "It's a draw!";
+                resetGame();
+
+            }
+
         });
     });
     
@@ -99,7 +138,7 @@ const gameBoard = (function(squares) {
             let track = combo.map((pos)=>{return board[pos]});
             if (!track.includes('')) {
                 if (track[0]===track[1] && track[1]===track[2]) {
-                    return true
+                    return true;
                 };
             };
         };
@@ -108,6 +147,7 @@ const gameBoard = (function(squares) {
     const clear = () => {
         board.fill('');
         count = 0;
+        gameOver = false;
     }
     const updateDisp = () => {
         for (let i=0; i<board.length; i++) {
